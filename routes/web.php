@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SalesController;
@@ -47,3 +48,6 @@ Route::get('/', function () {
 
 // route level
 Route::get('/level', [LevelController::class, 'index']);
+
+// route kategori
+Route::get('/kategori', [KategoriController::class, 'index']);
