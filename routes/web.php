@@ -51,3 +51,7 @@ Route::get('/level', [LevelController::class, 'index']);
 
 // route kategori
 Route::get('/kategori', [KategoriController::class, 'index']);
+
+// route user
+Route::get('/user', [UserController::class, 'index']);
+
