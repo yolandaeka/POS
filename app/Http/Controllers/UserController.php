@@ -25,7 +25,12 @@ class UserController extends Controller
 
         // Metode findOrFail and firstOrFail akan mengambil hasil pertama dari kueri; 
         // namun, jika tidak ada hasil yang ditemukan, sebuah Illuminate\Database\Eloquent\ModelNotFoundException akan dilempar
-        $user = UserModel::where('username', 'manager9')->firstOrFail();
+        // $user = UserModel::where('username', 'manager9')->firstOrFail();
+        
+        
+        // agregate function like count, mac, min, sum
+        
+        $user = UserModel::where('level_id', 2)->count();
         return view('user', ['data' => $user]);
 
 
