@@ -19,9 +19,13 @@ class UserController extends Controller
         // $user = UserModel::firstWhere('level_id', 1);
 
         // Show one of data based by condition
-        $user = UserModel::findOr(20, ['username', 'nama'], function() {
-            abort(404);
-        });
+        // $user = UserModel::findOr(20, ['username', 'nama'], function() {
+        //     abort(404);
+        // });
+
+        // Metode findOrFail and firstOrFail akan mengambil hasil pertama dari kueri; 
+        // namun, jika tidak ada hasil yang ditemukan, sebuah Illuminate\Database\Eloquent\ModelNotFoundException akan dilempar
+        $user = UserModel::where('username', 'manager9')->firstOrFail();
         return view('user', ['data' => $user]);
 
 
