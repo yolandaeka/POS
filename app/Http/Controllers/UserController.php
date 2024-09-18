@@ -11,21 +11,23 @@ class UserController extends Controller
     public function index(){
 
         //  tambah data user
-        // $data = [
-        //     'level_id'=>5,
-        //     'username'=>'customer-1',
-        //     'nama'=>'Pelanggan',
-        //     'password'=>Hash::make('12345')
-        // ];
+        $data = [
+            'level_id'=>2,
+            'username'=>'manager_tiga',
+            'nama'=>'Manager 3',
+            'password'=>Hash::make('12345')
+        ];
+
+        UserModel::create($data);
 
         // UserModel::insert($data); 
 
         // update data user
-        $data = [
-            'nama' => 'Pelanggan Perama',
-        ];
+        // $data = [
+        //     'nama' => 'Pelanggan Perama',
+        // ];
 
-        UserModel::where('username', 'customer-1')->update($data); 
+        // UserModel::where('username', 'customer-1')->update($data); 
 
 
         // alses model user mmodel
