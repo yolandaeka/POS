@@ -10,15 +10,37 @@ class UserController extends Controller
 {
     public function index(){
 
-        //  tambah data user
-        $data = [
-            'level_id'=>2,
-            'username'=>'manager_tiga',
-            'nama'=>'Manager 3',
-            'password'=>Hash::make('12345')
-        ];
+        // show the data with limit 1
+        // $user = UserModel::find(1);
 
-        UserModel::create($data);
+        // show the data with limit 1 n constraint
+        // $user = UserModel::where('level_id', 1)->first();
+
+        // $user = UserModel::firstWhere('level_id', 1);
+
+        // Show one of data based by condition
+        $user = UserModel::findOr(20, ['username', 'nama'], function() {
+            abort(404);
+        });
+        return view('user', ['data' => $user]);
+
+
+
+
+
+
+
+        
+
+        //  tambah data user
+        // $data = [
+        //     'level_id'=>2,
+        //     'username'=>'manager_tiga',
+        //     'nama'=>'Manager 3',
+        //     'password'=>Hash::make('12345')
+        // ];
+
+        // UserModel::create($data);
 
         // UserModel::insert($data); 
 
@@ -31,8 +53,8 @@ class UserController extends Controller
 
 
         // alses model user mmodel
-         $user = UserModel::all(); //ambil semua data dari table m_user
-         return view('user',['data' => $user]);
+        //  $user = UserModel::all(); //ambil semua data dari table m_user
+        //  return view('user',['data' => $user]);
 
         
     }
