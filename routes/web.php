@@ -55,3 +55,17 @@ Route::get('/kategori', [KategoriController::class, 'index']);
 // route user
 Route::get('/user', [UserController::class, 'index']);
 
+// route user
+Route::get('/user/tambah', [UserController::class, 'tambah']);
+
+// route user simpan
+Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan']);
+
+// route user update
+Route::get('/user/ubah/{id}', [UserController::class, 'ubah']);
+
+// route ubah simpan
+Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan']);
+
+// route ubah simpan
+Route::get('/user/hapus/{id}', [UserController::class, 'hapus']);
