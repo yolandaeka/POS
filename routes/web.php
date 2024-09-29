@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\SupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,3 +104,12 @@ Route::group(['prefix' => 'kategori'], function(){
     Route::delete('/{id}', [KategoriController::class, 'destroy']); // menghapus data Kategori
 });
 
+Route::group(['prefix' => 'supplier'], function(){
+    Route::get('/', [SupplierController::class, 'index']); //menampilkan halaman awal leevel
+    Route::post('/list',[SupplierController::class,'list']);   //menampilkan data Supplier dalam bentuk json
+    Route::get('/create', [SupplierController::class, 'create']);   // menampilkan halaman form tambah Supplier
+    Route::post('/', [SupplierController::class, 'store']);         // menyimpan data Supplier baru
+    Route::get('/{id}/edit', [SupplierController::class, 'edit']); // menampilkan halaman form edit Supplier
+    Route::put('/{id}', [SupplierController::class, 'update']);     // menyimpan perubahan data Supplier
+    Route::delete('/{id}', [SupplierController::class, 'destroy']); // menghapus data Supplier
+});

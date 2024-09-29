@@ -16,6 +16,10 @@ class BarangModel extends Model
     public function barang():BelongsTo {
         return $this->belongsTo(KategoriModel::class);
     }
+
+    public function supplier():BelongsTo {
+        return $this->belongsTo(SupplierModel::class);
+    }
 }
 
 ?>
