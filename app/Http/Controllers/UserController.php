@@ -266,7 +266,7 @@ class UserController extends Controller
         $request->validate(
             [
                 // username harus diisi, berupa string, min 3 karakter, dan bernilai unik di tabel m_user kolom username
-                'username' => 'required|string|min:3|unique:m_user, username',
+                'username' => 'required|string|min:3|unique:m_user,username',
                 'nama' => 'required|string|max:100',
                 'password' => 'required|min:5',
                 'level_id' => 'required|integer'
@@ -276,7 +276,7 @@ class UserController extends Controller
         UserModel::create([
             'username' =>$request->username,
             'nama' => $request->nama,
-            'passowrd' => $request->password,
+            'password' => $request->password,
             'level_id' => $request->level_id
         ]);
 
@@ -348,7 +348,7 @@ class UserController extends Controller
         UserModel::find($id)->update([
             'username' =>$request->username,
             'nama' => $request->nama,
-            'passowrd' => $request->password,
+            'password' => $request->password ? bcrypt($request->password) : UserModel::find($id)->password,
             'level_id' => $request->level_id
         ]);
 
