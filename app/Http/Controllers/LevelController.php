@@ -88,8 +88,6 @@ class LevelController extends Controller
             'title' => 'Tambah Level Baru'
         ];
 
-        $level = LevelModel::all();     //ambil data level untuk ditampilkan di form
-
         $activeMenu = 'level'; //set menu yang sedang aktif
 
         return view('level.create_level', [
