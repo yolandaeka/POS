@@ -112,9 +112,15 @@ Route::group(['prefix' => 'kategori'], function(){
     Route::get('/', [KategoriController::class, 'index']); //menampilkan halaman awal leevel
     Route::post('/list',[KategoriController::class,'list']);   //menampilkan data Kategori dalam bentuk json
     Route::get('/create', [KategoriController::class, 'create']);   // menampilkan halaman form tambah Kategori
+    Route::get('/create_ajax', [KategoriController::class, 'create_ajax']); //Menampilkan halaman form tambah user Ajax
+    Route::post('/ajax', [KategoriController::class, 'store_ajax']); // Menyimpan data user baru Ajax 
     Route::post('/', [KategoriController::class, 'store']);         // menyimpan data Kategori baru
     Route::get('/{id}/edit', [KategoriController::class, 'edit']); // menampilkan halaman form edit Kategori
     Route::put('/{id}', [KategoriController::class, 'update']);     // menyimpan perubahan data Kategori
+    Route::get('/{id}/edit_ajax', [KategoriController::class,'edit_ajax']); //menampilkan halaman form edit user ajax
+    Route::put('/{id}/update_ajax', [KategoriController::class,'update_ajax']);   //menyimpan halaman form edit user ajax
+    Route::get('/{id}/delete_ajax', [KategoriController::class, 'confirm_ajax']); //tampil form confirm delete user ajax
+    Route::delete('/{id}/delete_ajax', [KategoriController::class, 'delete_ajax']);  //hapus data user
     Route::delete('/{id}', [KategoriController::class, 'destroy']); // menghapus data Kategori
 });
 
