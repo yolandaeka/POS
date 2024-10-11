@@ -104,7 +104,7 @@ Route::middleware(['auth'])->group(function(){ //semua route di grup ini harus l
     
     });
 
-Route::middleware(['authorize:ADM'])->group(function(){ //semua route harus punya role adm baru bisa akses
+Route::middleware(['authorize:ADM,MNG'])->group(function(){ //semua route harus punya role adm baru bisa akses
     Route::get('/level', [LevelController::class, 'index']); //menampilkan halaman awal leevel
     Route::post('/level/list',[LevelController::class,'list']);   //menampilkan data level dalam bentuk json
     Route::get('/level/create', [LevelController::class, 'create']);   // menampilkan halaman form tambah level
