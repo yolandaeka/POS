@@ -79,7 +79,8 @@ Route::get('login', [AuthController::class,'login'])->name('login');
 Route::post('login', [AuthController::class, 'postlogin']);
 Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 
-
+Route::get('register', [AuthController::class, 'register']);
+Route::post('register', [AuthController::class, 'store']);
 
 
 Route::middleware(['auth'])->group(function(){ //semua route di grup ini harus login duls
