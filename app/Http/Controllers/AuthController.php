@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +17,7 @@ class AuthController extends Controller
     
     public function postlogin(Request $request)
     {
-        if($request->ajax() || $request->wantsJson()){
+        if ($request->ajax() || $request->wantsJson()) {
             $credentials = $request->only('username', 'password');
 
             if (Auth::attempt($credentials)) {

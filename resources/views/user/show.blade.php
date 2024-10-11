@@ -33,7 +33,7 @@
                     </tr>
                     <tr>
                         <th>Password</th>
-                        <td>********</td>
+                        <td>{{ $user->password }}</td>
                     </tr>
                 </table>
             @endempty
