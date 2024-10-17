@@ -167,6 +167,8 @@ Route::middleware(['authorize:ADM,MNG,STF'])->group(function(){
     Route::get('/barang/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']); // untuk tampilkan form confirm delete barang Ajax
     Route::delete('/barang/{id}/delete_ajax', [BarangController::class, 'delete_ajax']); // untuk hapus data barang Ajax 
     Route::delete('/barang/{id}', [BarangController::class, 'destroy']); // menghapus data Supplier
+    Route::get('/barang/import', [BarangController::class, 'import']); //ajax form upolad
+    Route::post('/barang/import_ajax', [BarangController::class, 'import_ajax']); //ajax import exvel)
 });
 
 
