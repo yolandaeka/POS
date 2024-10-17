@@ -169,6 +169,7 @@ Route::middleware(['authorize:ADM,MNG,STF'])->group(function(){
     Route::delete('/barang/{id}', [BarangController::class, 'destroy']); // menghapus data Supplier
     Route::get('/barang/import', [BarangController::class, 'import']); //ajax form upolad
     Route::post('/barang/import_ajax', [BarangController::class, 'import_ajax']); //ajax import exvel)
+    Route::get('/barang/export_excel', [BarangController::class, 'export_excel']);  //export excel
 });
 
 
