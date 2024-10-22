@@ -1,21 +1,21 @@
-<form action="{{ url('/stok/import_ajax') }}" method="POST" id="form-import" enctype="multipart/form-data">
+<form action="{{ url('/level/import_ajax') }}" method="POST" id="form-import" enctype="multipart/form-data">
     @csrf
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Import Data Supplier</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Import Data Level</h5>
                 <button type="button" class="close" data-dismiss="modal" arialabel="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     <label>Download Template</label>
-                    <a href="{{ asset('template_stok.xlsx') }}" class="btn btn-info btnsm" download><i class="fa fa-file-excel"></i> Download</a>
+                    <a href="{{ asset('template_level.xlsx') }}" class="btn btn-info btnsm" download><i class="fa fa-file-excel"></i>Download</a>
                     <small id="error-kategori_id" class="error-text form-text textdanger"></small>
                 </div>
                 <div class="form-group">
                     <label>Pilih File</label>
-                    <input type="file" name="file_stok" id="file_stok" class="formcontrol" required>
-                    <small id="error-file_stok" class="error-text form-text textdanger"></small>
+                    <input type="file" name="file_level" id="file_level" class="formcontrol" required>
+                    <small id="error-file_level" class="error-text form-text textdanger"></small>
                 </div>
             </div>
             <div class="modal-footer">
@@ -26,13 +26,10 @@
     </div>
 </form>
 <script>
-    
-    var tableStok;
-
     $(document).ready(function() {
         $("#form-import").validate({
             rules: {
-                file_stok: {
+                file_barang: {
                     required: true,
                     extension: "xlsx"
                 },
@@ -53,7 +50,7 @@
                                 title: 'Berhasil',
                                 text: response.message
                             });
-                            tableStok.ajax.reload(); // reload datatable
+                            tableBarang.ajax.reload(); // reload datatable
                         } else { // jika error
                             $('.error-text').text('');
                             $.each(response.msgField, function(prefix, val) {

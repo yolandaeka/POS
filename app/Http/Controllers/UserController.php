@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -579,11 +580,10 @@ class UserController extends Controller
                 foreach ($data as $baris => $value) {
                     if ($baris > 1) { // baris ke 1 adalah header, maka lewati
                         $insert[] = [
-                            'user_id' => $value['A'],
-                            'level_id' => $value['B'],
-                            'username' => $value['C'],
-                            'nama' => $value['D'],
-                            'password' => $value['E'],
+                            'level_id' => $value['A'],
+                            'username' => $value['B'],
+                            'nama' => $value['C'],
+                            'password' => $value['D'],
                             'created_at' => now(),
                         ];
                     }
@@ -609,7 +609,7 @@ class UserController extends Controller
     public function export_excel()
     {
         //ambil data yang akan di export
-        $user = UserModel::select('level_id', 'user_id', 'username', 'harga_beli', 'harga_jual')
+        $user = UserModel::select('level_id', 'user_id', 'nama','username', 'password')
             ->orderBy('level_id')
             ->with('level')
             ->get();
@@ -619,35 +619,31 @@ class UserController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
 
         $sheet->setCellValue('A1', 'No');
-        $sheet->setCellValue('B1', 'Kode Barang');
-        $sheet->setCellValue('C1', 'Nama Barang');
-        $sheet->setCellValue('D1', 'Harga Beli');
-        $sheet->setCellValue('E1', 'Harga Jual');
-        $sheet->setCellValue('f1', 'Kategori');
+        $sheet->setCellValue('B1', 'Username');
+        $sheet->setCellValue('C1', 'Nama Pengguna');
+        $sheet->setCellValue('D1', 'Level Pengguna');
 
-        $sheet->getStyle('A1:F1')->getFont()->setBold(true); //bold header
+        $sheet->getStyle('A1:D1')->getFont()->setBold(true); //bold header
 
         $no = 1;
         $baris = 2;
         foreach ($user as $key => $value) {
             $sheet->setCellValue('A' . $baris, $no);
-            $sheet->setCellValue('B' . $baris, $value->user_kode);
-            $sheet->setCellValue('C' . $baris, $value->user_nama);
-            $sheet->setCellValue('D' . $baris, $value->harga_beli);
-            $sheet->setCellValue('E' . $baris, $value->harga_jual);
-            $sheet->setCellValue('F' . $baris, $value->kategori->kategori_nama);
+            $sheet->setCellValue('B' . $baris, $value->username);
+            $sheet->setCellValue('C' . $baris, $value->nama);
+            $sheet->setCellValue('D' . $baris, $value->level->level_nama);
             $baris++;
             $no++;
 
         }
 
-        foreach (range('A', 'F') as $columID) {
+        foreach (range('A', 'D') as $columID) {
             $sheet->getColumnDimension($columID)->setAutoSize(true); //set auto size kolom
         }
 
-        $sheet->setTitle('Data Barang');
+        $sheet->setTitle('Data User');
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $filename = 'Data Barang ' . date('Y-m-d H:i:s') . '.xlsx';
+        $filename = 'Data User ' . date('Y-m-d H:i:s') . '.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '"');
         header('Cache-Control: max-age=0');
@@ -660,5 +656,22 @@ class UserController extends Controller
         exit;
 
     }
+
+    public function export_pdf(){
+        //ambil data yang akan di export
+        $user = UserModel::select('level_id', 'user_id', 'username', 'nama','password')
+        ->orderBy('level_id')
+        ->with('level')
+        ->get();
+
+        //use Barruvdh\DomPDF\Facade\\Pdf
+       $pdf = Pdf::loadView('user.export_pdf', ['user' =>$user]);
+       $pdf->setPaper('a4', 'potrait');
+       $pdf->setOption("isRemoteEnabled", true);
+       $pdf->render();
+
+       return $pdf->download('Data User '.date('Y-m-d H:i:s').'.pdf');
+   }
+
 
 }

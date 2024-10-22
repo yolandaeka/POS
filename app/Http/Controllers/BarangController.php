@@ -278,7 +278,7 @@ class BarangController extends Controller
         $pdf->setOption("isRemoteEnabled", true);
         $pdf->render();
 
-        return $pdf->stream('Data Barang '.date('Y-m-d H:i:s').'.pdf');
+        return $pdf->download('Data Barang '.date('Y-m-d H:i:s').'.pdf');
     }
 
 }
