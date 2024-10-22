@@ -1,4 +1,3 @@
-
 <html lang="en">
 
 <head>
@@ -16,60 +15,137 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+    <style>
+        /* Gaya untuk background dan layout */
+        body {
+            display: flex; /* Menggunakan flexbox untuk layout */
+            height: 100vh; /* Membuat tinggi penuh */
+            font-family: 'Source Sans Pro', sans-serif; /* Mengatur font */
+            margin: 0; /* Menghilangkan margin default */
+        }
+
+        .image-container {
+            flex: 1; /* Mengisi sisa ruang untuk gambar */
+            background: url('ilustrasi1.jpg') no-repeat center center; /* Ganti dengan URL gambar background Anda */
+            background-size: 600px; /* Memastikan gambar menutupi seluruh area */
+        }
+
+        .login-container {
+            flex: 1; /* Mengisi sisa ruang untuk form */
+            display: flex;
+            align-items: center; /* Center vertical */
+            justify-content: center; /* Center horizontal */
+            background-color: rgba(255, 255, 255, 0.9); /* Warna latar belakang putih dengan sedikit transparansi */
+           /* Menambahkan padding */
+        }
+
+        .login-box {
+            width: 100%; /* Memastikan lebar penuh */
+            max-width: 400px; /* Mengatur lebar maksimum */
+            border-radius: 15px; /* Sudut membulat pada card */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); /* Bayangan untuk efek kedalaman */
+            padding: 20px; /* Menambahkan padding */
+            transition: transform 0.3s ease; /* Transisi halus untuk hover */
+        }
+
+        .login-box:hover {
+            transform: translateY(-5px); /* Efek angkat pada hover */
+        }
+
+        .input-group {
+            margin-bottom: 15px; /* Menambahkan jarak antar input */
+        }
+
+        .input-group input {
+            border-radius: 10px; /* Sudut membulat pada input */
+            transition: border-color 0.3s; /* Transisi halus untuk border */
+        }
+
+        .input-group input:focus {
+            border-color: #007bff; /* Ubah warna border saat fokus */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Efek glow saat fokus */
+        }
+
+        .btn-primary {
+            border-radius: 10px; /* Sudut membulat pada tombol */
+            transition: background-color 0.3s, transform 0.3s; /* Transisi halus untuk background */
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Warna background saat hover */
+            transform: scale(1.05); /* Efek zoom saat hover */
+        }
+
+        .error-text {
+            font-size: 12px; /* Ukuran font untuk pesan error */
+        }
+
+        /* Gaya untuk link register */
+        .register-link {
+            color: #007bff; /* Warna link */
+            transition: color 0.3s; /* Transisi halus untuk warna */
+        }
+
+        .register-link:hover {
+            color: #0056b3; /* Warna saat hover */
+            text-decoration: underline; /* Garis bawah saat hover */
+        }
+    </style>
 </head>
 
-<body class="hold-transition login-page">
-    <div class="login-box">
-        <!-- /.login-logo -->
-        <div class="card card-outline card-primary">
-            <div class="card-header text-center"><a href="{{ url('/') }}" class="h1"><b>Admin</b>LTE</a></div>
-            <div class="card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
-                <form action="{{ url('login') }}" method="POST" id="form-login">
-                    @csrf
-                    <div class="input-group mb-3">
-                        <input type="text" id="username" name="username" class="form-control"
-                            placeholder="Username">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+<body>
+    <div class="image-container"></div> <!-- Gambar di sebelah kiri -->
+    <div class="login-container">
+        <div class="login-box">
+            <div class="card card-outline card-info">
+                <div class="card-header text-center">
+                    <a href="{{ url('/') }}" class="h1"><b>Selamat Datang</b></a>
+                </div>
+                <div class="card-body">
+                    <p class="login-box-msg">Masuk untuk memulai sesi Anda</p>
+                    <form action="{{ url('login') }}" method="POST" id="form-login">
+                        @csrf
+                        <div class="input-group mb-3">
+                            <input type="text" id="username" name="username" class="form-control"
+                                placeholder="Username" required>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                </div>
+                            </div>
+                            <small id="error-username" class="error-text text-danger"></small>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="password" id="password" name="password" class="form-control"
+                                placeholder="Password" required>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                            <small id="error-password" class="error-text text-danger"></small>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="icheck-info">
+                                    <input type="checkbox" id="remember"><label for="remember">Ingat Saya</label>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-info btn-block">Masuk</button>
                             </div>
                         </div>
-                        <small id="error-username" class="error-text text-danger"></small>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="password" id="password" name="password" class="form-control"
-                            placeholder="Password">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+                        <br>
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <span>Tidak memiliki akun? <a href="{{ url('register') }}" class="register-link">Daftar</a></span>
                             </div>
                         </div>
-                        <small id="error-password" class="error-text text-danger"></small>
-                    </div>
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember"><label for="remember">Remember Me</label>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <br>
-                    <div class="row">
-                        Don't have account?<a href="{{ url('register') }}"> Register</a>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
     </div>
-    <!-- /.login-box -->
 
     <!-- jQuery -->
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
@@ -104,13 +180,13 @@
                         maxlength: 20
                     }
                 },
-                submitHandler: function(form) { // ketika valid, maka bagian yg akan dijalankan 
+                submitHandler: function(form) {
                     $.ajax({
                         url: form.action,
                         type: form.method,
                         data: $(form).serialize(),
                         success: function(response) {
-                            if (response.status) { // jika sukses 
+                            if (response.status) {
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Berhasil',
@@ -118,7 +194,7 @@
                                 }).then(function() {
                                     window.location = response.redirect;
                                 });
-                            } else { // jika error 
+                            } else {
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {
                                     $('#error-' + prefix).text(val[0]);

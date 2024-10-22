@@ -78,6 +78,8 @@ use App\Http\Controllers\ProfilController;
 
 Route::pattern('id', '[0-9]+'); //artinya ketika dia ada parameter id, maka harus berupa angka
 
+Route::get('/home', [HomeController::class,'index']);
+
 Route::get('login', [AuthController::class,'login'])->name('login');
 Route::post('login', [AuthController::class, 'postlogin']);
 Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
@@ -87,7 +89,7 @@ Route::post('register', [AuthController::class, 'store']);
 
 
 Route::middleware(['auth'])->group(function(){ //semua route di grup ini harus login duls
-    
+
     Route::get('/', [WelcomeController::class, 'index']);
 
     Route::middleware(['authorize:ADM'])->group(function(){
