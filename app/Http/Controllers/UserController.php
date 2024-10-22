@@ -223,7 +223,10 @@ class UserController extends Controller
         // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
             ->addIndexColumn()
             ->editColumn('avatar', function ($user) {
-                return '<img src="' . asset('gambar/' . $user->avatar) . '"  style="width: 70px; height: 70px;" />';
+                // Cek apakah avatar ada atau gunakan gambar default jika kosong
+                $avatar = $user->avatar ? asset('gambar/' . $user->avatar) : asset('gambar/profil-pic.png');
+            
+                return '<img src="' . $avatar . '" style="width: 70px; height: 70px;" />';
             })
             ->addColumn('aksi', function ($user) { // menambahkan kolom aksi
                 /*$btn = '<a href="'.url('/user/' . $user->user_id).'" class="btn btn-info btn-sm">Detail</a> ';
@@ -398,10 +401,10 @@ class UserController extends Controller
                 'password' => 'required|min:5',
                 'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             ];
-
-            // use iluminate/support/facades/validator
+    
+            // Validator untuk validasi input
             $validator = Validator::make($request->all(), $rules);
-
+    
             if ($validator->fails()) {
                 return response()->json([
                     'status' => false,
@@ -409,41 +412,38 @@ class UserController extends Controller
                     'msgField' => $validator->errors(),
                 ]);
             }
-
-            $input = $request->all();
-
-            // Jika avatar ada, simpan gambar, jika tidak ada gunakan default
-            if ($request->hasFile('avatar')) {
-                $fileName = 'profile_' . Auth::user()->user_id . '.' . $request->avatar->getClientOriginalExtension();
-
-                // Check if an existing profile picture exists and delete it
-                $oldFile = 'profile_pictures/' . $fileName;
-                if (Storage::disk('public')->exists($oldFile)) {
-                    Storage::disk('public')->delete($oldFile);
-                }
-
-                $request->avatar->move(public_path('gambar'), $fileName);
-            } else {
-                $fileName = 'profil-pic.png'; // default avatar
-            }
-
-            UserModel::create([
-                'level_id' => $input['level_id'],
-                'username' => $input['username'],
-                'nama' => $input['nama'],
-                'password' => bcrypt($input['password']),
-                'avatar' => $fileName, // Simpan nama file gambar
+    
+            // Simpan data user tanpa avatar dulu agar ID terbuat
+            $user = UserModel::create([
+                'level_id' => $request->level_id,
+                'username' => $request->username,
+                'nama' => $request->nama,
+                'password' => bcrypt($request->password),
+                'avatar' => 'profil-pic.png', // Default avatar sementara
             ]);
-
+    
+            // Jika avatar ada, proses penyimpanan gambar
+            if ($request->hasFile('avatar')) {
+                // Gunakan ID user yang baru dibuat untuk nama file
+                $fileName = 'profile_' . $user->user_id . '.' . $request->avatar->getClientOriginalExtension();
+    
+                // Simpan gambar di direktori 'gambar'
+                $request->avatar->move(public_path('gambar'), $fileName);
+    
+                // Update user dengan nama file avatar baru
+                $user->avatar = $fileName;
+                $user->save(); // Simpan perubahan ke database
+            }
+    
             return response()->json([
                 'status' => true,
                 'message' => 'Data User berhasil disimpan',
             ]);
-
         }
-
-        redirect('/');
+    
+        return redirect('/');
     }
+    
 
     public function edit_ajax(string $id)
     {
@@ -486,27 +486,33 @@ class UserController extends Controller
                     $request->request->remove('password');
                 }
 
-                if (!$request->filled('avatar')) {
-                    $request->request->remove('avatar');
-                }
+                // if (!$request->filled('avatar')) {
+                //     $request->request->remove('avatar');
+                // }
 
-                // Cek jika ada file avatar yang diunggah
                 if ($request->hasFile('avatar')) {
-                    // Dapatkan file avatar
-                    $file = $request->file('avatar');
-                    // Buat nama unik untuk file avatar tersebut
-                    $filename = 'profile_' . Auth::user()->user_id . '.' . $request->avatar->getClientOriginalExtension();
-                    // Tentukan path penyimpanan
-                    $path = public_path('gambar');
-                    // Simpan file di direktori 'gambar'
-                    $file->move($path, $filename);
 
-                    // Simpan nama file avatar baru di database
-                    $user->avatar = $filename;
+                    $fileName = 'profile_' . $user->user_id . '.' . $request->avatar->getClientOriginalExtension();
+    
+                    // Check if an existing profile picture exists and delete it
+                    $oldFile = public_path('gambar/'. $fileName);
+                    if (Storage::disk('public')->exists($oldFile)) {
+                        Storage::disk('public')->delete($oldFile);
+                    }
+    
+                    $request->avatar->move(public_path('gambar'), $fileName);
+
+                } else {
+                    $fileName = 'profil-pic.png'; // default avatar
                 }
 
-                // Update data user kecuali avatar (avatar sudah di-handle di atas)
-                $user->update($request->except('avatar'));
+                UserModel::find($id)->update([
+                    'username' => $request->username,
+                    'nama' => $request->nama,
+                    'password' => $request->password ? bcrypt($request->password) : UserModel::find($id)->password,
+                    'level_id' => $request->level_id,
+                    'avatar' => $fileName
+                ]);
 
                 return response()->json([
                     'status' => true,
