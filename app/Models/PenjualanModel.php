@@ -23,7 +23,7 @@ class PenjualanModel extends Model
 
     public function details()
     {
-        return $this->hasMany(PenjualanDetailModel::class, 'penjualan_id');
+        return $this->hasMany(PenjualanDetailModel::class, 'penjualan_id', 'penjualan_id');
     }
 
 }

@@ -14,6 +14,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\PenjualanDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -218,24 +219,51 @@ Route::middleware(['authorize:ADM,MNG,STF'])->group(function(){
 
 });
 
-Route::middleware(['authorize:ADM,MNG,STF'])->group(function(){
-    Route::get('/penjualan', [PenjualanController::class, 'index']);  // menampilkan halaman penjualan
-    Route::post('/penjualan/list', [PenjualanController::class, 'list'] );    //menampilkan data penjualan dalam bentuk json datatables
-    Route::get('/penjualan/create_ajax', [PenjualanController::class, 'create_ajax']); //Menampilkan halaman form tambah penjualan Ajax
-    Route::post('/penjualan/ajax', [PenjualanController::class, 'store_ajax']); // Menyimpan data penjualan baru Ajax 
-    Route::get('/penjualan/{id}', [PenjualanController::class, 'show']);       //menampilkan detai penjualan
-    Route::get('/penjualan/{id}/edit_ajax', [PenjualanController::class,'edit_ajax']); //menampilkan halaman form edit penjualan ajax
-    Route::put('/penjualan/{id}/update_ajax', [PenjualanController::class,'update_ajax']);   //menyimpan halaman form edit penjualan ajax
-    Route::get('/penjualan/{id}/delete_ajax', [PenjualanController::class, 'confirm_ajax']); //tampil form confirm delete penjualan ajax
-    Route::delete('/penjualan/{id}/delete_ajax', [PenjualanController::class, 'delete_ajax']);  //hapus data penjualan
-    Route::delete('/penjualan/{id}', [PenjualanController::class, 'destroy']);     //mengahpus data penjualan
-    Route::get('/penjualan/import', [PenjualanController::class, 'import']); //ajax form upolad
-    Route::post('/penjualan/import_ajax', [PenjualanController::class, 'import_ajax']); //ajax import exvel)
-    Route::get('/penjualan/export_excel', [PenjualanController::class, 'export_excel']);  //export excel
-    Route::get('/penjualan/export_pdf', [PenjualanController::class, 'export_pdf']); //export pdf
-
+Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
+    Route::get('/penjualan', [PenjualanController::class, 'index']);          // menampilkan halaman awal stok
+    Route::post('/penjualan/list', [PenjualanController::class, 'list']);      // menampilkan data stok dalam bentuk json untuk datatables
+    Route::get('/penjualan/create', [PenjualanController::class, 'create']);   // menampilkan halaman form tambah stok
+    Route::get('/penjualan/create_ajax', [PenjualanController::class, 'create_ajax']);
+    Route::post('/penjualan/ajax', [PenjualanController::class, 'store_ajax']);
+    Route::post('/penjualan', [PenjualanController::class, 'store']);         // menyimpan data stok baru
+    Route::get('/penjualan/import', [PenjualanController::class, 'import']);
+    Route::post('/penjualan/import_ajax', [PenjualanController::class, 'import_ajax']);
+    Route::get('/penjualan/export_excel', [PenjualanController::class, 'export_excel']); // export excel
+    Route::get('/penjualan/export_pdf', [PenjualanController::class, 'export_pdf']); // export pdf
+    Route::get('/penjualan/{id}', [PenjualanController::class, 'show']);       // menampilkan detail stok
+    Route::get('/penjualan/{id}/show_ajax', [PenjualanController::class, 'show_ajax']);
+    Route::get('/penjualan/{id}/edit', [PenjualanController::class, 'edit']);  // menampilkan halaman form edit stok
+    Route::put('/penjualan/{id}', [PenjualanController::class, 'update']);     // menyimpan perubahan data stok
+    Route::get('/penjualan/{id}/edit_ajax', [PenjualanController::class, 'edit_ajax']);
+    Route::put('/penjualan/{id}/update_ajax', [PenjualanController::class, 'update_ajax']);
+    Route::get('/penjualan/{id}/delete_ajax', [PenjualanController::class, 'confirm_ajax']);
+    Route::delete('/penjualan/{id}/delete_ajax', [PenjualanController::class, 'delete_ajax']);
+    Route::delete('/penjualan/{id}', [PenjualanController::class, 'destroy']); // menghapus data stok
 });
 
+Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
+    Route::group(['prefix' => 'detail'], function () {
+        Route::get('/', [PenjualanDetailController::class, 'index']);          // menampilkan halaman awal stok
+        Route::post('/list', [PenjualanDetailController::class, 'list']);      // menampilkan data stok dalam bentuk json untuk datatables
+        Route::get('/create', [PenjualanDetailController::class, 'create']);   // menampilkan halaman form tambah stok
+        Route::get('/create_ajax', [PenjualanDetailController::class, 'create_ajax']);
+        Route::post('/ajax', [PenjualanDetailController::class, 'store_ajax']);
+        Route::post('/', [PenjualanDetailController::class, 'store']);         // menyimpan data stok baru
+        Route::get('/import', [PenjualanDetailController::class, 'import']);
+        Route::post('/import_ajax', [PenjualanDetailController::class, 'import_ajax']);
+        Route::get('/export_excel', [PenjualanDetailController::class, 'export_excel']); // export excel
+        Route::get('/export_pdf', [PenjualanDetailController::class, 'export_pdf']); // export pdf
+        Route::get('/{id}', [PenjualanDetailController::class, 'show']);       // menampilkan detail stok
+        Route::get('/penjualan/detail/{id}/show_ajax', [PenjualanDetailController::class, 'show_ajax']);
+        Route::get('/{id}/edit', [PenjualanDetailController::class, 'edit']);  // menampilkan halaman form edit stok
+        Route::put('/{id}', [PenjualanDetailController::class, 'update']);     // menyimpan perubahan data stok
+        Route::get('/penjualan/detail/{id}/edit_ajax', [PenjualanDetailController::class, 'edit_ajax']);
+        Route::put('/{id}/update_ajax', [PenjualanDetailController::class, 'update_ajax']);
+        Route::get('/{id}/delete_ajax', [PenjualanDetailController::class, 'confirm_ajax']);
+        Route::delete('/{id}/delete_ajax', [PenjualanDetailController::class, 'delete_ajax']);
+        Route::delete('/{id}', [PenjualanDetailController::class, 'destroy']); // menghapus data stok
+    });
+});
 
 });
 
