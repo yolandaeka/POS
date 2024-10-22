@@ -20,10 +20,11 @@ class BarangModel extends Model
     {
         return $this->belongsTo(KategoriModel::class, 'kategori_id', 'kategori_id');
     }
-
+ 
     public function supplier():BelongsTo {
         return $this->belongsTo(SupplierModel::class);
     }
+
 }
 
 ?>

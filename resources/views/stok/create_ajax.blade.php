@@ -1,41 +1,55 @@
-<form action="{{ url('/user/ajax') }}" method="POST" id="form-tambah" enctype="multipart/form-data">
+<form action="{{ url('/stok/ajax') }}" method="POST" id="form-tambah" enctype="multipart/form-data">
     @csrf
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data User</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Srok Barang</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Level Pengguna</label>
-                    <select name="level_id" id="level_id" class="form-control" required>
-                        <option value="">- Pilih Level -</option>
-                        @foreach ($level as $l)
-                            <option value="{{ $l->level_id }}">{{ $l->level_nama }}</option>
+                    <label>User</label>
+                    <select name="user_id" id="user_id" class="form-control" required>
+                        <option value="">- Pilih User -</option>
+                        @foreach ($user as $l)
+                            <option value="{{ $l->user_id }}">{{ $l->nama}} </option>
                         @endforeach
                     </select>
-                    <small id="error-level_id" class="error-text form-text text-danger"></small>
+                    <small id="error-user_id" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Username</label>
-                    <input value="" type="text" name="username" id="username" class="form-control" required>
-                    <small id="error-username" class="error-text form-text text-danger"></small>
+                    <label>Supplier</label>
+                    <select name="supplier_id" id="supplier_id" class="form-control" required>
+                        <option value="">- Pilih Supplier -</option>
+                        @foreach ($supplier as $l)
+                            <option value="{{ $l->supplier_id }}">{{ $l->supplier_nama }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-supplier_id" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Nama</label>
-                    <input value="" type="text" name="nama" id="nama" class="form-control" required>
-                    <small id="error-nama" class="error-text form-text text-danger"></small>
+                    <label>Barang</label>
+                    <select name="barang_id" id="barang_id" class="form-control" required>
+                        <option value="">- Pilih Barang -</option>
+                        @foreach ($barang as $l)
+                            <option value="{{ $l->barang_id }}">{{ $l->barang_nama}}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-barang_id" class="error-text form-text text-danger"></small>
                 </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input value="" type="password" name="password" id="password" class="formcontrol" required>
-                    <small id="error-password" class="error-text form-text text-danger"></small>
+                <div class="form-group row">
+                    <label class="col-1 control-label col-form-label">Stok Tanggal</label>
+                    <div class="col-11">
+                        <input type="datetime-local" class="form-control" id="stok_tanggal" name="stok_tanggal" required>
+                        <small id="error-stok_tanggal" class="error-text form-text text-danger"></small>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Pilih Foto Profil</label>
-                    <input type="file" name="avatar" id="avatar" class="formcontrol">
-                    <small id="error-avatar" class="error-text form-text textdanger"></small>
+                <div class="form-group row">
+                    <label class="col-1 control-label col-form-label">Stok Jumlah</label>
+                    <div class="col-11">
+                        <input type="text" class="form-control" id="stok_jumlah" name="stok_jumlah" required>
+                        <small id="error-stok_jumlah" class="error-text form-text text-danger"></small>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -50,28 +64,24 @@
     $(document).ready(function() {
         $("#form-tambah").validate({
             rules: {
-                level_id: {
-                    required: true,
-                    number: true
-                },
-                username: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 20
-                },
-                nama: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 100
-                },
-                password: {
-                    required: true,
-                    minlength: 5,
-                    maxlength: 20
-                },
-                avatar: {
-                    extension: "jpg|jpeg|png"
-                }
+                supplier_id: {
+                        required: true,
+                        number: true
+                    },
+                    barang_id: {
+                        required: true,
+                        number: true
+                    },
+                    user_id: {
+                        required: true,
+                        number: true
+                    },
+                    stok_tanggal: {
+                        required: true,
+                    },
+                    stok_jumlah: {
+                        required: true
+                    }
             },
             submitHandler: function(form) {
             var formData = new FormData(form); // Gunakan FormData untuk file upload
@@ -91,10 +101,10 @@
                             text: response.message
                         }).then(function() {
                             // Reload halaman atau update data setelah Swal ditutup
-                            if (typeof dataUser !== 'undefined') {
-                                dataUser.ajax.reload(); // Reload data table jika ada
+                            if (typeof dataStok !== 'undefined') {
+                                dataStok.ajax.reload(); // Reload data table jika ada
                             } else {
-                                location.reload(); // Reload halaman jika tidak ada dataUser
+                                location.reload(); // Reload halaman jika tidak ada dataStok
                             }
                         });
                     } else {

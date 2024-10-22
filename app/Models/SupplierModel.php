@@ -16,4 +16,5 @@ class SupplierModel extends Model
     public function supplier():BelongsTo {
         return $this->belongsTo(BarangModel::class);
     }
+
 }

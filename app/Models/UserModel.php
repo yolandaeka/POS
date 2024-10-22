@@ -14,7 +14,7 @@ class UserModel extends Authenticatable
     protected $table = 'm_user';    //table yang akan digunakan
     protected $primaryKey = 'user_id'; //primary key dari table
 
-    protected $fillable = ['level_id', 'username', 'nama', 'password', 'created_at', 'updated_at'];
+    protected $fillable = ['level_id', 'username', 'nama', 'password', 'avatar','created_at', 'updated_at'];
 
    protected $hidden = ['password']; //jangan ditampilkan saat select
 
@@ -39,4 +39,5 @@ class UserModel extends Authenticatable
     public function getRole(){
         return $this->level->level_kode;
     }
+
 }

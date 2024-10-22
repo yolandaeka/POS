@@ -51,15 +51,21 @@
                         type: form.method,
                         data: $(form).serialize(),
                         success: function(response) {
-                            if(response.status){
-                                $('#myModal').modal('hide');
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Berhasil',
-                                    text: response.message
-                                });
-                                dataUser.ajax.reload();
-                            }else{
+                            if (response.status) {
+                        // Menampilkan notifikasi berhasil
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: response.message
+                        }).then(function() {
+                            // Reload halaman atau update data setelah Swal ditutup
+                            if (typeof dataUser !== 'undefined') {
+                                dataUser.ajax.reload(); // Reload data table jika ada
+                            } else {
+                                location.reload(); // Reload halaman jika tidak ada dataUser
+                            }
+                        });
+                    }else{
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {
                                     $('#error-'+prefix).text(val[0]);

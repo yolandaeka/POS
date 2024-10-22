@@ -34,18 +34,24 @@
   @include('layouts.header')
   <!-- /.navbar -->
 
-  <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ url('/')}}" class="brand-link">
-      <img src="{{ asset('adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">PWL - Starter Code</span>
+    <a href="{{ url('/') }}" class="brand-link">
+        @if(Auth::user()->avatar)
+            <!-- Tampilkan avatar pengguna jika ada -->
+            <img src="{{ asset('gambar/' . Auth::user()->avatar) }}" alt="User Avatar" class="brand-image img-circle elevation-3" style="opacity: .8; width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
+        @else
+            <!-- Jika tidak ada avatar, tampilkan logo default -->
+            <img src="{{ asset('gambar/profil-pic.png') }}" alt="profil picture" class="brand-image img-circle elevation-3" style="opacity: .8; width: 40px; height: 40px;">
+        @endif
+        <span class="brand-text font-weight-light">{{ Auth::user()->username }}</span>
     </a>
 
     <!-- Sidebar -->
-   @include('layouts.sidebar')
+    @include('layouts.sidebar')
     <!-- /.sidebar -->
-  </aside>
+</aside>
+
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
