@@ -1,6 +1,6 @@
 @extends('layouts.template')
 @section('content')
-    <div class="card">
+    <div class="card card-outline card-primary" style="margin-left: 10px; margin-right:10px">
         <div class="card-header">
             <h3 class="card-title">Stok Barang</h3>
             <div class="card-tools">

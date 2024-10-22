@@ -5,7 +5,7 @@
 <!-- Font Awesome -->
 <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
 
-<div class="card card-outline card-primary">
+<div class="card card-outline card-primary" style="margin-left: 10px; margin-right:10px">
     <div class="card-header">
         <h3 class="card-title">{{ $page->title }}</h3>
         <div class="card-tools">

@@ -13,6 +13,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\StokController;
+use App\Http\Controllers\ProfilController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,6 +110,12 @@ Route::middleware(['auth'])->group(function(){ //semua route di grup ini harus l
         Route::get('/user/export_excel', [UserController::class, 'export_excel']);  //export excel
         Route::get('/user/export_pdf', [UserController::class, 'export_pdf']); //export pdf
     
+    });
+
+    Route::middleware(['authorize:ADM,MNG,STF,PLG'])->group(function(){
+        Route::get('/profil', [ProfilController::class, 'index']);
+        Route::get('/profil/{id}/edit_ajax', [ProfilController::class, 'edit_ajax']);
+        Route::put('/profil/{id}/update_ajax', [ProfilController::class, 'update_ajax']);
     });
 
 Route::middleware(['authorize:ADM'])->group(function(){ //semua route harus punya role adm baru bisa akses

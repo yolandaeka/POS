@@ -13,7 +13,7 @@
                             </div>
                         @else
                         <div class="d-flex align-items-start"> <!-- Menggunakan d-flex untuk layout -->
-                            <img src="{{ asset('gambar/' . ($user->avatar ?? 'profil-pic.jpg')) }}" class="img-circle elevation-2 me-4" alt="User Image" width="150" height="150" style="margin-bottom: 20px;">
+                            <img src="{{ asset($user->avatar ? 'gambar/' . $user->avatar : 'gambar/profil-pic.png') }}" class="img-circle elevation-2 me-4" alt="User Image" width="150" height="150" style="margin-bottom: 20px;">
                             <div>
                                 <div class="d-flex mb-6"> <!-- Menggunakan d-flex untuk membuat baris ID dan Nama -->
                                     <div class="me-4"> <!-- Menambahkan margin ke kanan -->
