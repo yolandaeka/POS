@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\LogoutController;
 use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\BarangController;
+use App\Http\Controllers\Api\PenjualanController;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Spatie\FlareClient\Api;
@@ -44,5 +45,7 @@ Route::post('/register1', App\Http\Controllers\Api\RegisterController::class)->n
 Route::post('/barang', App\Http\Controllers\Api\BarangController::class)->name('barang');
 Route::get('barang/{barang}', [BarangController::class, 'show']);
 
+Route::post('/penjualan', App\Http\Controllers\Api\PenjualanController::class)->name('penjualan');
+Route::get('penjualan/{penjualan}', [PenjualanController::class, 'show']);
 
 ?>
