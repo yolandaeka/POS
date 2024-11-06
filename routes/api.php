@@ -64,7 +64,11 @@ Route::post('/register1', App\Http\Controllers\Api\RegisterController::class)->n
 
 //m_barang
 Route::post('/barang', App\Http\Controllers\Api\BarangController::class)->name('barang');
+// m_barang
+Route::get('barang', [BarangController::class, 'index']);
 Route::get('barang/{barang}', [BarangController::class, 'show']);
+Route::put('barang/{barang}', [BarangController::class, 'update']);
+Route::delete('barang/{barang}', [BarangController::class, 'destroy']);
 
 //t_penjualan
 Route::post('/penjualan', App\Http\Controllers\Api\PenjualanController::class)->name('penjualan');

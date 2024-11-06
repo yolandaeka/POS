@@ -53,4 +53,36 @@ class BarangController extends Controller
     {
         return BarangModel::find($barang);
     }
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, BarangModel $barang)
+    {
+        $barang->update($request->all());
+        return BarangModel::find($barang);
+    }
+
+
+    public function index()
+    {
+        return BarangModel::all();
+    }
+
+    public function destroy(BarangModel $barang)
+    {
+        $barang->delete();
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Data Terhapus',
+        ]);
+    }
+
+
 }
