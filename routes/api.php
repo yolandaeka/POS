@@ -46,7 +46,7 @@ Route::get('user/{user}', [UserController::class, 'show']);
 Route::put('user/{user}', [UserController::class, 'update']);
 Route::delete('user/{user}', [UserController::class, 'destroy']);
 
-// m_kategori
+// kategori
 Route::get('kategori', [KategoriController::class, 'index']);
 Route::post('kategori', [KategoriController::class, 'store']);
 Route::get('kategori/{kategori}', [KategoriController::class, 'show']);
