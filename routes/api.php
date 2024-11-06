@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\LogoutController;
 use App\Http\Controllers\Api\LevelController;
+use App\Http\Controllers\Api\BarangController;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Spatie\FlareClient\Api;
@@ -39,4 +40,9 @@ Route::put('levels/{level}', [LevelController::class, 'update']);
 Route::delete('levels/{level}', [LevelController::class, 'destroy']);
 
 Route::post('/register1', App\Http\Controllers\Api\RegisterController::class)->name('register1');
+
+Route::post('/barang', App\Http\Controllers\Api\BarangController::class)->name('barang');
+Route::get('barang/{barang}', [BarangController::class, 'show']);
+
+
 ?>
