@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\BarangController;
 use App\Http\Controllers\Api\PenjualanController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\KategoriController;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Spatie\FlareClient\Api;
@@ -45,6 +46,14 @@ Route::get('user/{user}', [UserController::class, 'show']);
 Route::put('user/{user}', [UserController::class, 'update']);
 Route::delete('user/{user}', [UserController::class, 'destroy']);
 
+// m_kategori
+Route::get('kategori', [KategoriController::class, 'index']);
+Route::post('kategori', [KategoriController::class, 'store']);
+Route::get('kategori/{kategori}', [KategoriController::class, 'show']);
+Route::put('kategori/{kategori}', [KategoriController::class, 'update']);
+Route::delete('kategori/{kategori}', [KategoriController::class, 'destroy']);
+
+//m_level
 Route::get('levels', [LevelController::class, 'index']); 
 Route::post('levels', [LevelController::class, 'store']); 
 Route::get('levels/{level}', [LevelController::class, 'show']);
@@ -53,9 +62,11 @@ Route::delete('levels/{level}', [LevelController::class, 'destroy']);
 
 Route::post('/register1', App\Http\Controllers\Api\RegisterController::class)->name('register1');
 
+//m_barang
 Route::post('/barang', App\Http\Controllers\Api\BarangController::class)->name('barang');
 Route::get('barang/{barang}', [BarangController::class, 'show']);
 
+//t_penjualan
 Route::post('/penjualan', App\Http\Controllers\Api\PenjualanController::class)->name('penjualan');
 Route::get('penjualan/{penjualan}', [PenjualanController::class, 'show']);
 
