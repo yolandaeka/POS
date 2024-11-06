@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\LogoutController;
 use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\BarangController;
 use App\Http\Controllers\Api\PenjualanController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Spatie\FlareClient\Api;
@@ -29,10 +30,20 @@ use Spatie\FlareClient\Api;
 
 Route::post('/register', App\Http\Controllers\Api\RegisterController::class)->name('register');
 Route::post('/login', App\Http\Controllers\Api\LoginController::class)->name('login'); 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+
 Route::post('/logout', App\Http\Controllers\Api\LogoutController::class)->name('logout');
+
+//m_user
+Route::get('user', [UserController::class, 'index']);
+Route::post('user', [UserController::class, 'store']);
+Route::get('user/{user}', [UserController::class, 'show']);
+Route::put('user/{user}', [UserController::class, 'update']);
+Route::delete('user/{user}', [UserController::class, 'destroy']);
 
 Route::get('levels', [LevelController::class, 'index']); 
 Route::post('levels', [LevelController::class, 'store']); 
