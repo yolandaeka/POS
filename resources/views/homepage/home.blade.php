@@ -299,14 +299,6 @@
     <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
 
-    <script>
-        function modalAction(url = '') {
-            console.log(url); // Debugging
-            $('#myModal').load(url, function() {
-                $('#myModal').modal('show');
-            });
-        }
-    </script>
 </body>
 
 </html>

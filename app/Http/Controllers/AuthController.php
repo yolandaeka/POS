@@ -78,6 +78,7 @@ class AuthController extends Controller
                 ]);
             }
             UserModel::create($request->all());
+            
             return response()->json([
                 'status'    => true,
                 'message'   => 'Data user berhasil disimpan',
